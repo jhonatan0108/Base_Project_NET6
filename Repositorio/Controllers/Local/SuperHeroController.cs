@@ -26,16 +26,8 @@ namespace Repositorio.Controllers.Local
         [Route("GetSuperHeroes")]
         public async Task<IActionResult> GetSuperHeroes()
         {
-            try
-            {
-                var data = _superHeroService.SelectAll();
-
-                return Ok(data);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            var data = _superHeroService.SelectAll();
+            return Ok(data);
         }
 
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -44,16 +36,8 @@ namespace Repositorio.Controllers.Local
         [Route("GetSuperHero/{id}")]
         public async Task<IActionResult> GetSuperHero(int id)
         {
-            try
-            {
-                var data = _superHeroService.FindbyId(id);
-
-                return Ok(data);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            var data = _superHeroService.FindbyId(id);
+            return Ok(data);
         }
         /// <summary>
         /// 
@@ -92,15 +76,8 @@ namespace Repositorio.Controllers.Local
         [Route("DeleteSuperHero/{id}")]
         public async Task<IActionResult> DeleteSuperHero(int id)
         {
-            try
-            {
-                _superHeroService.Delete(id);
-                return Ok(_superHeroService.SelectAll());
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            _superHeroService.Delete(id);
+            return Ok(_superHeroService.SelectAll());
         }
     }
 }

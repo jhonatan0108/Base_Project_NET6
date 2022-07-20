@@ -1,5 +1,7 @@
+using Elmah.Io.AspNetCore;
 using Microsoft.AspNetCore;
 using Microsoft.EntityFrameworkCore;
+using Repositorio.Common.Classes.DTO.Exeptions;
 using Repositorio.Config.Dependencies;
 using Repositorio.Domain.Services.Local;
 using Repositorio.Infraestructura.Repositories.Database.Context;
@@ -11,7 +13,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-Local.Register(builder.Services, builder.Configuration);
+
 builder.Host.ConfigureHostOptions(o => o.ShutdownTimeout = TimeSpan.FromMinutes(10));
 
 
@@ -21,12 +23,12 @@ builder.Services.AddCors(options => options.AddPolicy(name: "SuperHeroOrigins",
         policy.WithOrigins("http://localhost:4200").AllowAnyMethod().AllowAnyHeader();
     }));
 
-builder.Services.AddDbContext<DataContext>(options =>
-{
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"), b => b.MigrationsAssembly("Repositorio"));
-});
 
+builder.Services.Configure<ElmahIoOptions>(builder.Configuration.GetSection("ElmahIo"));
 
+builder.Services.AddElmahIo();
+
+Local.Register(builder.Services, builder.Configuration);
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -34,6 +36,11 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+    app.UseMiddleware<ExceptionMiddleware>(true);
+}
+else
+{
+    app.UseMiddleware<ExceptionMiddleware>(false);
 }
 app.UseCors("SuperHeroOrigins");
 app.UseHttpsRedirection();
