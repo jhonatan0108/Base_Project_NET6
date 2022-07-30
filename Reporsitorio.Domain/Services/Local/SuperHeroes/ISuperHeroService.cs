@@ -1,7 +1,6 @@
-﻿
-using Repositorio.Common.Classes.DTO.Local;
+﻿using Repositorio.Common.Classes.DTO.Local;
 
-namespace Repositorio.Domain.Services.Local
+namespace Repositorio.Domain.Services.Local.SuperHeroes
 {
     public interface ISuperHeroService
     {

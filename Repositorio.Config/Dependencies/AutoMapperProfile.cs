@@ -1,6 +1,8 @@
 ﻿using Repositorio.Common.Classes.DTO.Local;
-using Repositorio.Infraestructura.Repositories.Database.Entities;
 using AutoMapper;
+using Repositorio.Infraestructura.Repositories.Database.Entities.Users;
+using Repositorio.Common.Classes.DTO.Local.Users;
+using Repositorio.Infraestructura.Repositories.Database.Entities.SuperHero;
 
 namespace Repositorio.Config.Dependencies
 {
@@ -9,6 +11,7 @@ namespace Repositorio.Config.Dependencies
         public AutoMapperProfile()
         {
             CreateMap<SuperHero, SuperHeroDTO>().ReverseMap();
+            CreateMap<UserDTO, UserEntity>().ReverseMap();
         }
     }
 }

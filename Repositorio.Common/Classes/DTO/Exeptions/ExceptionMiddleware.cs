@@ -26,6 +26,7 @@ namespace Repositorio.Common.Classes.DTO.Exeptions
         /// <returns></returns>
         public async Task Invoke(HttpContext httpContext)
         {
+
             try
             {
                 await _next(httpContext);
@@ -33,7 +34,34 @@ namespace Repositorio.Common.Classes.DTO.Exeptions
             catch (Exception ex)
             {
                 // Se controla la excepción
-                await HandleExceptionAsync(httpContext, ex);
+                var response = httpContext.Response;
+                response.ContentType = "application/json";
+                var bodyresponse = "";
+                switch (ex)
+                {
+                    case ArgumentException e:
+                        // custom application error
+                        response.StatusCode = (int)HttpStatusCode.BadRequest;
+                        break;
+                    case KeyNotFoundException e:
+                        // not found error
+                        response.StatusCode = (int)HttpStatusCode.NotFound;
+                        bodyresponse = JsonConvert.SerializeObject(new { StatusCode = (int)HttpStatusCode.NotFound, message = e?.Message, });
+                        SendErrorService(ex, httpContext);
+                        break;
+                    case System.ComponentModel.DataAnnotations.ValidationException exeption:
+                        httpContext.Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                        bodyresponse = JsonConvert.SerializeObject(new { StatusCode = (int)HttpStatusCode.BadRequest, message = exeption?.Message, });
+                        SendErrorService(ex, httpContext);
+                        break;
+                    default:
+                        // unhandled error
+                        response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                        bodyresponse = JsonConvert.SerializeObject(new { StatusCode = (int)HttpStatusCode.InternalServerError, message = ex?.Message, });
+                        SendErrorService(ex, httpContext);
+                        break;
+                }
+                await response.WriteAsync(bodyresponse);
             }
         }
         public Task HandleExceptionAsync(HttpContext context, Exception exception)
@@ -48,7 +76,6 @@ namespace Repositorio.Common.Classes.DTO.Exeptions
                     NamingStrategy = new CamelCaseNamingStrategy()
                 }
             };
-
             switch (exception)
             {
                 case System.ComponentModel.DataAnnotations.ValidationException ex:

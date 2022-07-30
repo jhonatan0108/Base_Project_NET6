@@ -3,15 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.2.32616.157
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Repositorio", "Repositorio\Repositorio.csproj", "{F57E0FC9-7E48-4785-9B56-0B9E8EDE618F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Repositorio", "Repositorio\Repositorio.csproj", "{F57E0FC9-7E48-4785-9B56-0B9E8EDE618F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Repositorio.Domain", "Reporsitorio.Domain\Repositorio.Domain.csproj", "{686B43B0-7D1E-4C29-AF8C-DF8C5854DE4E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Repositorio.Domain", "Reporsitorio.Domain\Repositorio.Domain.csproj", "{686B43B0-7D1E-4C29-AF8C-DF8C5854DE4E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Repositorio.Infraestructura", "Repositorio.Infraestructura\Repositorio.Infraestructura.csproj", "{3008112A-8EBE-4DEC-B649-BF1DAD0E74B2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Repositorio.Infraestructura", "Repositorio.Infraestructura\Repositorio.Infraestructura.csproj", "{3008112A-8EBE-4DEC-B649-BF1DAD0E74B2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Repositorio.Common", "Repositorio.Common\Repositorio.Common.csproj", "{EC4D2B88-9BE5-4FFF-9009-CA3ABA0909BB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Repositorio.Common", "Repositorio.Common\Repositorio.Common.csproj", "{EC4D2B88-9BE5-4FFF-9009-CA3ABA0909BB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Repositorio.Config", "Repositorio.Config\Repositorio.Config.csproj", "{F8A18B50-A803-48A7-BDD9-F689B415DE7F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Repositorio.Config", "Repositorio.Config\Repositorio.Config.csproj", "{F8A18B50-A803-48A7-BDD9-F689B415DE7F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

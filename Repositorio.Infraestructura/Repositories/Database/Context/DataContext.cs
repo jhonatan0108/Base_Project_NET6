@@ -1,17 +1,19 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using Repositorio.Infraestructura.Repositories.Database.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Repositorio.Infraestructura.Repositories.Database.Entities.SuperHero;
+using Repositorio.Infraestructura.Repositories.Database.Entities.Users;
+
 
 namespace Repositorio.Infraestructura.Repositories.Database.Context
 {
     public class DataContext : DbContext
     {
-        public IConfiguration _configuration { get; }
+        private readonly IConfiguration _configuration;
+        #region DBSets
+        public virtual DbSet<SuperHero> SuperHero => Set<SuperHero>();
+        public virtual DbSet<UserEntity> Users { get; set; }
+        #endregion
+
         public DataContext(DbContextOptions<DataContext> options, IConfiguration configuration) : base(options)
         {
             _configuration = configuration;
@@ -23,10 +25,8 @@ namespace Repositorio.Infraestructura.Repositories.Database.Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<UserEntity>().HasKey(e => new { e.UserId });
             base.OnModelCreating(modelBuilder);
         }
-        #region DBSets
-        public DbSet<SuperHero> SuperHero => Set<SuperHero>();
-        #endregion
     }
 }

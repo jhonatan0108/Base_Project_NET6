@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Repositorio.Infraestructura.Repositories.Database.Context;
-using Repositorio.Infraestructura.Repositories.Database.Entities;
+using Repositorio.Infraestructura.Repositories.Database.Entities.SuperHero;
 
-namespace Repositorio.Infraestructura.Repositories.EntityFramework.Local
+namespace Repositorio.Infraestructura.Repositories.EntityFramework.Local.SuperHeroes
 {
     public class SuperHeroRepository : ISuperHeroRepository
     {

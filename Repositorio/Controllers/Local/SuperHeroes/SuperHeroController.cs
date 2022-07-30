@@ -1,12 +1,13 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Repositorio.Common.Classes.DTO.Local;
-using Repositorio.Domain.Services.Local;
+using Repositorio.Domain.Services.Authorization;
+using Repositorio.Domain.Services.Local.SuperHeroes;
 
-namespace Repositorio.Controllers.Local
+namespace Repositorio.Controllers.Local.SuperHeroes
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class SuperHeroController : ControllerBase
     {
         protected IConfiguration _configuration;
@@ -24,7 +25,7 @@ namespace Repositorio.Controllers.Local
         /// <returns>respuesta json</returns>
         [HttpGet]
         [Route("GetSuperHeroes")]
-        public async Task<IActionResult> GetSuperHeroes()
+        public IActionResult GetSuperHeroes()
         {
             var data = _superHeroService.SelectAll();
             return Ok(data);
@@ -34,7 +35,7 @@ namespace Repositorio.Controllers.Local
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [HttpGet]
         [Route("GetSuperHero/{id}")]
-        public async Task<IActionResult> GetSuperHero(int id)
+        public IActionResult GetSuperHero(int id)
         {
             var data = _superHeroService.FindbyId(id);
             return Ok(data);
@@ -46,35 +47,21 @@ namespace Repositorio.Controllers.Local
         /// <returns></returns>
         [HttpPost]
         [Route("CreateSuperHero")]
-        public async Task<IActionResult> CreateSuperHero([FromBody] SuperHeroDTO hero)
+        public IActionResult CreateSuperHero([FromBody] SuperHeroDTO hero)
         {
-            try
-            {
-                _superHeroService.Insert(hero);
-                return Ok(_superHeroService.SelectAll());
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            _superHeroService.Insert(hero);
+            return Ok(_superHeroService.SelectAll());
         }
         [HttpPut]
         [Route("UpdateSuperHero")]
-        public async Task<IActionResult> UpdateSuperHero([FromBody] SuperHeroDTO hero)
+        public IActionResult UpdateSuperHero([FromBody] SuperHeroDTO hero)
         {
-            try
-            {
-                _superHeroService.Update(hero);
-                return Ok(_superHeroService.FindbyId(hero.Id));
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            _superHeroService.Update(hero);
+            return Ok(_superHeroService.FindbyId(hero.Id));
         }
         [HttpDelete]
         [Route("DeleteSuperHero/{id}")]
-        public async Task<IActionResult> DeleteSuperHero(int id)
+        public IActionResult DeleteSuperHero(int id)
         {
             _superHeroService.Delete(id);
             return Ok(_superHeroService.SelectAll());

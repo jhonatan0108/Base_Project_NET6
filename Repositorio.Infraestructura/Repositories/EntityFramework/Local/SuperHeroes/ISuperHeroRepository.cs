@@ -1,11 +1,11 @@
-﻿using Repositorio.Infraestructura.Repositories.Database.Entities;
+﻿using Repositorio.Infraestructura.Repositories.Database.Entities.SuperHero;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Repositorio.Infraestructura.Repositories.EntityFramework.Local
+namespace Repositorio.Infraestructura.Repositories.EntityFramework.Local.SuperHeroes
 {
     public interface ISuperHeroRepository
     {

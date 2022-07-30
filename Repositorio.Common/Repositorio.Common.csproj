@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -7,14 +7,21 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Classes\Resources\**" />
+    <EmbeddedResource Remove="Classes\Resources\**" />
+    <None Remove="Classes\Resources\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Elmah.Io.AspNetCore" Version="4.2.42" />
     <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Abstractions" Version="2.2.0" />
     <PackageReference Include="Microsoft.Extensions.Localization.Abstractions" Version="6.0.7" />
     <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Classes\Resources\" />
+    <ProjectReference Include="..\Repositorio.Infraestructura\Repositorio.Infraestructura.csproj" />
   </ItemGroup>
 
 </Project>

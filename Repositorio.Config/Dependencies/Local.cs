@@ -1,22 +1,12 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using NetCore.AutoRegisterDi;
-using Repositorio.Domain.Services.Common;
-using Repositorio.Domain.Services.Local;
+using Repositorio.Common.Classes.DTO.Helpers;
 using Repositorio.Infraestructura.Repositories.Database.Context;
-using Repositorio.Infraestructura.Repositories.Database.Entities;
-using Repositorio.Infraestructura.Repositories.EntityFramework.Local;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Repositorio.Config.Dependencies
 {
@@ -61,13 +51,13 @@ namespace Repositorio.Config.Dependencies
                        c.Name.EndsWith("Service") ||
                        c.Name.EndsWith("Validator") ||
                        c.Name.EndsWith("Localizer") ||
-                       c.Name.EndsWith("Resource"))
+                       c.Name.EndsWith("Resource") ||
+                       c.Name.EndsWith("Utils"))
                 .AsPublicImplementedInterfaces();
 
             #endregion Register DI
-            //services.AddScoped<ISuperHeroRepository, SuperHeroRepository>();
-            //services.AddScoped<ISuperHeroService, SuperHeroService>();
-            //services.AddScoped<IEmailService, EmailService>();
+
+            services.Configure<AppSettings>(configuration.GetSection("Jwt:SecretKey"));
 
         }
     }

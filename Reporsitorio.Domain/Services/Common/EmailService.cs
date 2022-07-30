@@ -26,7 +26,7 @@ namespace Repositorio.Domain.Services.Common
                 Text = request.Body
             };
             using var smtp = new SmtpClient();
-            smtp.Connect(_configuration.GetSection("EmailHost").Value, int.Parse(_configuration.GetSection("EmailPort").Value), MailKit.Security.SecureSocketOptions.StartTls);
+            smtp.Connect(_configuration.GetSection("EmailHost").Value, int.Parse(_configuration.GetSection("EmailPort").Value), MailKit.Security.SecureSocketOptions.None);
             smtp.Authenticate(_configuration.GetSection("EmailUsername").Value, _configuration.GetSection("EmailPassword").Value);
             smtp.Send(email);
             smtp.Disconnect(true);

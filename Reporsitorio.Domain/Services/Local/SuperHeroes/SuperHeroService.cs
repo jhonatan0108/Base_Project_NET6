@@ -1,14 +1,9 @@
 ﻿using AutoMapper;
 using Repositorio.Common.Classes.DTO.Local;
-using Repositorio.Infraestructura.Repositories.Database.Entities;
-using Repositorio.Infraestructura.Repositories.EntityFramework.Local;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Repositorio.Infraestructura.Repositories.Database.Entities.SuperHero;
+using Repositorio.Infraestructura.Repositories.EntityFramework.Local.SuperHeroes;
 
-namespace Repositorio.Domain.Services.Local
+namespace Repositorio.Domain.Services.Local.SuperHeroes
 {
     public class SuperHeroService : ISuperHeroService
     {

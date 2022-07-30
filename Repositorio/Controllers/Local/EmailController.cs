@@ -1,12 +1,13 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Repositorio.Common.Classes.DTO.Common;
+using Repositorio.Domain.Services.Authorization;
 using Repositorio.Domain.Services.Common;
 
 namespace Repositorio.Controllers.Local
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class EmailController : ControllerBase
     {
         private readonly IEmailService _serviceEmail;
