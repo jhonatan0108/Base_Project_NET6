@@ -1,8 +1,8 @@
-﻿using Repositorio.Common.Classes.DTO.Local;
-using AutoMapper;
+﻿using AutoMapper;
 using Repositorio.Infraestructura.Repositories.Database.Entities.Users;
 using Repositorio.Common.Classes.DTO.Local.Users;
 using Repositorio.Infraestructura.Repositories.Database.Entities.SuperHero;
+using Repositorio.Common.Classes.DTO.Local.SuperHeores;
 
 namespace Repositorio.Config.Dependencies
 {

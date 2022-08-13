@@ -1,4 +1,4 @@
-﻿using Repositorio.Common.Classes.DTO.Local;
+﻿using Repositorio.Common.Classes.DTO.Local.SuperHeores;
 
 namespace Repositorio.Domain.Services.Local.SuperHeroes
 {

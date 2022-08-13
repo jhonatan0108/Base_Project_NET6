@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Repositorio.Common.Classes.DTO.Local;
+using Repositorio.Common.Classes.DTO.Local.SuperHeores;
 using Repositorio.Infraestructura.Repositories.Database.Entities.SuperHero;
 using Repositorio.Infraestructura.Repositories.EntityFramework.Local.SuperHeroes;
 

@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Repositorio.Common.Classes.DTO.Local;
+using Repositorio.Common.Classes.DTO.Local.SuperHeores;
 using Repositorio.Domain.Services.Authorization;
 using Repositorio.Domain.Services.Local.SuperHeroes;
 
@@ -7,7 +7,7 @@ namespace Repositorio.Controllers.Local.SuperHeroes
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class SuperHeroController : ControllerBase
     {
         protected IConfiguration _configuration;

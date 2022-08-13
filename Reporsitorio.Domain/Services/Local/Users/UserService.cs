@@ -56,13 +56,13 @@ namespace Repositorio.Domain.Services.Local.Users
             return _mapper.Map<UserDTO>(user);
         }
 
-        public bool IsAuthenticated(UserDTO User)
+        private bool IsAuthenticated(UserDTO User, string password)
         {
             bool response = false;
             UserEntity userEntity = _userRepository.getUserByEmail(User.Email);
             if (userEntity != null)
             {
-                response = VerifyPasswordHash(new CipherText(_configuration).DecryptString(User.Password), userEntity.PasswordHash, userEntity.PasswordSalt);
+                response = VerifyPasswordHash(password, userEntity.PasswordHash, userEntity.PasswordSalt);
             }
             return response;
         }
@@ -84,30 +84,68 @@ namespace Repositorio.Domain.Services.Local.Users
                 passwordHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
             }
         }
-
+        private bool VerifyPasswordUser(UserEntity user, string pass)
+        {
+            return user.Password == new CipherText(_configuration).EncryptString(pass);
+        }
         public string GenerateToken(UserDTO User)
         {
             UserEntity userEntity = _userRepository.getUserByEmail(User.Email);
             return _jwtUtils.GenerateJwtToken(userEntity);
         }
 
-        public AuthenticateResponse Authenticate(AuthenticateRequest model)
+        public AuthenticateResponse GetToken(AuthenticateRequest model)
         {
             UserEntity user = _userRepository.getUserByEmail(model.Email);
 
             // validate
-            if (user == null || !IsAuthenticated(_mapper.Map<UserDTO>(user)))
+            if (user == null || !IsAuthenticated(_mapper.Map<UserDTO>(user), model.Password))
                 throw new ValidationException("Username or password is incorrect");
 
-            // authentication successful so generate jwt token
             var jwtToken = _jwtUtils.GenerateJwtToken(user);
-
             return new AuthenticateResponse(_mapper.Map<UserDTO>(user), jwtToken);
+        }
+
+        public UserDTO LoginUser(AuthenticateRequest model)
+        {
+            UserEntity user = _userRepository.getUserByEmail(model.Email);
+            if (user != null)
+            {
+                if (user.MaxAttempts > 0)
+                {
+                    if (VerifyPasswordUser(user, model.Password))
+                    {
+                        return _mapper.Map<UserDTO>(user);
+                    }
+                    else
+                    {
+                        //update attemps 
+                        user.MaxAttempts = user.MaxAttempts - 1;
+                        _userRepository.UpdateUser(user);
+                        throw new ValidationException("Username or password is incorrect");
+                    }
+                }
+                else
+                {
+                    user.IdStatus = (int)StatusEnum.Inactive;
+                    _userRepository.UpdateUser(user);
+                    throw new ValidationException("Your account has been blocked due to failed attempts.");
+                }
+            }
+            else
+            {
+                throw new ValidationException("User not found");
+            }
         }
 
         public UserDTO GetUserbyId(int id)
         {
             return _mapper.Map<UserDTO>(_userRepository.GetUserbyId(id));
+        }
+
+        public List<UserDTO> GetAll()
+        {
+            return _mapper.Map<List<UserDTO>>(_userRepository.GetAll());
         }
     }
 }

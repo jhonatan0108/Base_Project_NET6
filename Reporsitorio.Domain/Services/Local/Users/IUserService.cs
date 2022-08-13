@@ -4,12 +4,13 @@ namespace Repositorio.Domain.Services.Local.Users
 {
     public interface IUserService
     {
-        bool IsAuthenticated(UserDTO User);
+        List<UserDTO> GetAll();
         UserDTO RegisterUser(UserDTO User);
         string GenerateToken(UserDTO User);
 
-        AuthenticateResponse Authenticate(AuthenticateRequest model);
-
+        AuthenticateResponse GetToken(AuthenticateRequest model);
+        UserDTO LoginUser(AuthenticateRequest model);
         UserDTO GetUserbyId(int id);
+
     }
 }

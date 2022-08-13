@@ -1,4 +1,6 @@
-﻿using Repositorio.Infraestructura.Repositories.Database.Context;
+﻿using Microsoft.EntityFrameworkCore;
+using Repositorio.Common.Classes.Enums.Users;
+using Repositorio.Infraestructura.Repositories.Database.Context;
 using Repositorio.Infraestructura.Repositories.Database.Entities.Users;
 using System;
 using System.Collections.Generic;
@@ -21,9 +23,14 @@ namespace Repositorio.Infraestructura.Repositories.EntityFramework.Local.Users
             throw new NotImplementedException();
         }
 
+        public List<UserEntity> GetAll()
+        {
+            return _context.Users.ToList();
+        }
+
         public UserEntity getUserByEmail(string Email)
         {
-            return _context.Users.Where(x => x.Email.Trim() == Email.Trim()).FirstOrDefault();
+            return _context.Users.Where(x => x.Email.Trim() == Email.Trim() && x.IdStatus== (int)StatusEnum.Active).FirstOrDefault();
         }
 
         public UserEntity GetUserbyId(int id)
@@ -45,7 +52,9 @@ namespace Repositorio.Infraestructura.Repositories.EntityFramework.Local.Users
 
         public UserEntity UpdateUser(UserEntity User)
         {
-            throw new NotImplementedException();
+            _context.Entry(User).State = EntityState.Modified;
+            SaveChanges();
+            return User;
         }
 
 
