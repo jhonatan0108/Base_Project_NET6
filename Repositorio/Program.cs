@@ -1,4 +1,5 @@
 using Elmah.Io.AspNetCore;
+using Microsoft.AspNetCore.Http.Features;
 using Repositorio.Common.Classes.DTO.Exeptions;
 using Repositorio.Config.Dependencies;
 using Repositorio.Domain.Services.Authorization;
@@ -18,11 +19,19 @@ builder.Host.ConfigureHostOptions(o => o.ShutdownTimeout = TimeSpan.FromMinutes(
 builder.Services.Configure<ElmahIoOptions>(builder.Configuration.GetSection("ElmahIo"));
 builder.Services.AddElmahIo();
 
+builder.Services.Configure<FormOptions>(o =>
+{
+    o.ValueLengthLimit = int.MaxValue;
+    o.MultipartBodyLengthLimit = int.MaxValue;
+    o.MemoryBufferThreshold = int.MaxValue;
+});
+
 Local.Register(builder.Services, builder.Configuration);
 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -32,6 +41,7 @@ if (app.Environment.IsDevelopment())
 }
 else
 {
+    app.MapGet("/", () => "Hello World!");
     app.UseMiddleware<ExceptionMiddleware>(false);
     app.UseMiddleware<JwtMiddleware>();
 }

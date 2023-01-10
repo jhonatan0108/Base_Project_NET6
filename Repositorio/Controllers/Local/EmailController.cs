@@ -17,11 +17,12 @@ namespace Repositorio.Controllers.Local
             _serviceEmail = serviceEmail;
         }
 
-        [HttpPost]
+        [HttpPost, DisableRequestSizeLimit]
         [Route("Send")]
-        public IActionResult SendEmail(EmailDTO request)
+        public IActionResult SendEmail([FromForm] EmailDTO request)
         {
-            _serviceEmail.SendEmail(request);
+            var file = Request.Form.Files.Count() > 0 ? Request.Form.Files[0] : null;
+            _serviceEmail.SendEmail(request, file);
             return Ok();
         }
     }

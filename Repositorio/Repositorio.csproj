@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <PackageReference Include="Elmah.Io.AspNetCore" Version="4.2.42" />
+    <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="5.2.9" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.7" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.Negotiate" Version="6.0.7" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.6" />
@@ -27,5 +28,11 @@
     <ProjectReference Include="..\Reporsitorio.Domain\Repositorio.Domain.csproj" />
     <ProjectReference Include="..\Repositorio.Config\Repositorio.Config.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Resources\PDF\" />
+  </ItemGroup>
+
+  <ProjectExtensions><VisualStudio><UserProperties /></VisualStudio></ProjectExtensions>
 
 </Project>
