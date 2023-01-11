@@ -18,4 +18,8 @@
     <ProjectReference Include="..\Repositorio.Infraestructura\Repositorio.Infraestructura.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="ExternalServices\" />
+  </ItemGroup>
+
 </Project>

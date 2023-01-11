@@ -3,7 +3,7 @@ using Repositorio.Common.Classes.DTO.Common;
 using Repositorio.Domain.Services.Authorization;
 using Repositorio.Domain.Services.Common;
 
-namespace Repositorio.Controllers.Local
+namespace Repositorio.Controllers.Local.Common
 {
     [Route("api/[controller]")]
     [ApiController]

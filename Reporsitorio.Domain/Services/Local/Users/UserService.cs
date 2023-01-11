@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
 using Microsoft.Extensions.Configuration;
+using Repositorio.Common.Classes.Constants;
 using Repositorio.Common.Classes.DTO.Helpers;
 using Repositorio.Common.Classes.DTO.Local.Users;
 using Repositorio.Common.Classes.Enums.Users;
 using Repositorio.Domain.Services.Authorization;
+using Repositorio.Domain.Services.Local.Empresas;
 using Repositorio.Infraestructura.Repositories.Database.Entities.Users;
 using Repositorio.Infraestructura.Repositories.EntityFramework.Local.Users;
 using System.ComponentModel.DataAnnotations;
@@ -16,27 +18,27 @@ namespace Repositorio.Domain.Services.Local.Users
         private readonly IMapper _mapper;
         private readonly IUserRepository _userRepository;
         private readonly IConfiguration _configuration;
+        private readonly IEmpresasService _empresasService;
         private readonly IJwtUtils _jwtUtils;
 
-        public UserService(IMapper mapper, IUserRepository userRepository, IConfiguration configuration, IJwtUtils jwtUtils)
+        public UserService(IMapper mapper, IUserRepository userRepository, IConfiguration configuration, IJwtUtils jwtUtils, IEmpresasService empresasService)
         {
             _mapper = mapper;
             _userRepository = userRepository;
             _configuration = configuration;
             _jwtUtils = jwtUtils;
+            _empresasService = empresasService;
         }
 
-        public UserDTO RegisterUser(UserDTO User)
+        public async Task<UserDTO> RegisterUser(UserDTO User)
         {
-
             #region Valida si el usuario ya existe 
             UserEntity userEntity = _userRepository.getUserByEmail(User.Email);
             if (userEntity != null)
-                throw new ValidationException("El Usuario ya se encuentra registrado en el sistema. ");
+                throw new ValidationException(UserConstants.MSG_USER_REGISTRADO);
             #endregion
-
-
             UserEntity user = _mapper.Map<UserEntity>(User);
+            user.IdEmpresa = User.EmpresaUser.IdEmpresa;
             CreatePasswordhash(User.Password, out byte[] passwordHash, out byte[] passwordSalt);
             user.PasswordHash = passwordHash;
             user.PasswordSalt = passwordSalt;
@@ -52,8 +54,10 @@ namespace Repositorio.Domain.Services.Local.Users
                 user.IdRole = (int)RoleEnum.User;
             }
 
-            user = _userRepository.RegisterUser(user);
-            return _mapper.Map<UserDTO>(user);
+            user = await _userRepository.RegisterUser(user);
+            User = _mapper.Map<UserDTO>(user);
+            User.EmpresaUser = await _empresasService.GetInfoEmpresabyID(user.IdEmpresa);
+            return User;
         }
 
         private bool IsAuthenticated(UserDTO User, string password)
@@ -100,7 +104,7 @@ namespace Repositorio.Domain.Services.Local.Users
 
             // validate
             if (user == null || !IsAuthenticated(_mapper.Map<UserDTO>(user), model.Password))
-                throw new ValidationException("Username or password is incorrect");
+                throw new ValidationException(UserConstants.MSG_USER_INCORRECT);
 
             var jwtToken = _jwtUtils.GenerateJwtToken(user);
             return new AuthenticateResponse(_mapper.Map<UserDTO>(user), jwtToken);
@@ -115,26 +119,31 @@ namespace Repositorio.Domain.Services.Local.Users
                 {
                     if (VerifyPasswordUser(user, model.Password))
                     {
-                        return _mapper.Map<UserDTO>(user);
+                        UserDTO dataUser = _mapper.Map<UserDTO>(user);
+                        dataUser.EmpresaUser = _empresasService.GetInfoEmpresabyID(user.IdEmpresa).Result;
+                        //update attemps 
+                        user.MaxAttempts = 10;
+                        _ = Task.Run(() => _userRepository.UpdateUser(user));
+                        return dataUser;
                     }
                     else
                     {
                         //update attemps 
                         user.MaxAttempts = user.MaxAttempts - 1;
-                        _userRepository.UpdateUser(user);
-                        throw new ValidationException("Username or password is incorrect");
+                        _ = Task.Run(() => _userRepository.UpdateUser(user));
+                        throw new ValidationException(UserConstants.MSG_USER_INCORRECT);
                     }
                 }
                 else
                 {
                     user.IdStatus = (int)StatusEnum.Inactive;
                     _userRepository.UpdateUser(user);
-                    throw new ValidationException("Your account has been blocked due to failed attempts.");
+                    throw new ValidationException(UserConstants.MSG_USER_BLOCKED);
                 }
             }
             else
             {
-                throw new ValidationException("User not found");
+                throw new ValidationException(UserConstants.MSG_USER_NOT_FOUND);
             }
         }
 

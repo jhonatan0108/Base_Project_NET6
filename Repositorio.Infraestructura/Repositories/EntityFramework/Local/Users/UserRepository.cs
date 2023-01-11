@@ -30,7 +30,7 @@ namespace Repositorio.Infraestructura.Repositories.EntityFramework.Local.Users
 
         public UserEntity getUserByEmail(string Email)
         {
-            return _context.Users.Where(x => x.Email.Trim() == Email.Trim() && x.IdStatus== (int)StatusEnum.Active).FirstOrDefault();
+            return _context.Users.Where(x => x.Email.Trim() == Email.Trim() && x.IdStatus == (int)StatusEnum.Active).FirstOrDefault();
         }
 
         public UserEntity GetUserbyId(int id)
@@ -38,16 +38,16 @@ namespace Repositorio.Infraestructura.Repositories.EntityFramework.Local.Users
             return _context.Users.Find(id);
         }
 
-        public UserEntity RegisterUser(UserEntity User)
+        public async Task<UserEntity> RegisterUser(UserEntity User)
         {
-            _context.Users.Add(User);
+            await _context.Users.AddAsync(User);
             SaveChanges();
             return User;
         }
 
         public void SaveChanges()
         {
-            _context.SaveChanges();
+            _context.SaveChangesAsync();
         }
 
         public UserEntity UpdateUser(UserEntity User)

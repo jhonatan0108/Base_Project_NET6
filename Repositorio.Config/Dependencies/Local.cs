@@ -26,14 +26,16 @@ namespace Repositorio.Config.Dependencies
             services.AddSingleton(configMapper);
             #endregion
             #region Conexion Base de datos
+            services.AddTransient<DataContext, DataContext>();
             services.AddDbContext<DataContext>(options =>
             {
                 options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"), b => b.MigrationsAssembly("Repositorio"));
+                options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
             });
 
             services.AddSingleton<IConfiguration>(configuration);
 
-            services.AddScoped<DataContext, DataContext>();
+            
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             #endregion
 

@@ -19,9 +19,9 @@ namespace Repositorio.Controllers.Local.Users
 
         [AllowAnonymous]
         [HttpPost("register")]
-        public IActionResult Register(UserDTO request)
+        public async Task<IActionResult> Register(UserDTO request)
         {
-            UserDTO user = _userService.RegisterUser(request);
+            UserDTO user = await _userService.RegisterUser(request);
             return Ok(user);
         }
 
@@ -39,7 +39,7 @@ namespace Repositorio.Controllers.Local.Users
         {
             ResponseHandler<UserDTO> response = new();
             response.Data = _userService.LoginUser(request);
-            response.StatusCode = (int)HttpCodes.Ok;
+            response.Code = (int)HttpCodes.Ok;
             return response;
         }
 
@@ -49,7 +49,7 @@ namespace Repositorio.Controllers.Local.Users
         {
             ResponseHandler<List<UserDTO>> response = new();
             response.Data = _userService.GetAll();
-            response.StatusCode = (int)HttpCodes.Ok;
+            response.Code = (int)HttpCodes.Ok;
             return response;
         }
     }

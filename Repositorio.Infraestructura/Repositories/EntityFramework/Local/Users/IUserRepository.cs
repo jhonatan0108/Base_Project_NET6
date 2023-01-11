@@ -10,7 +10,7 @@ namespace Repositorio.Infraestructura.Repositories.EntityFramework.Local.Users
     public interface IUserRepository
     {
         List<UserEntity> GetAll();
-        UserEntity RegisterUser(UserEntity User);
+        Task<UserEntity> RegisterUser(UserEntity User);
         UserEntity getUserByEmail(string Email);
         UserEntity UpdateUser(UserEntity User);
         UserEntity GetUserbyId(int id);

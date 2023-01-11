@@ -1,10 +1,8 @@
-﻿
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Repositorio.Common.Classes.DTO.Local.Users;
 using Repositorio.Common.Classes.Enums.Users;
-using Repositorio.Infraestructura.Repositories.Database.Entities.Users;
 
 namespace Repositorio.Domain.Services.Authorization
 {

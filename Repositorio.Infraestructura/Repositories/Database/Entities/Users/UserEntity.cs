@@ -10,6 +10,7 @@ namespace Repositorio.Infraestructura.Repositories.Database.Entities.Users
     public class UserEntity
     {
         public int UserId { get; set; }
+        public int IdEmpresa { get; set; }
         public string Username { get; set; } = String.Empty;
         public string Email { get; set; } = String.Empty;
         public string Password { get; set; } = String.Empty;

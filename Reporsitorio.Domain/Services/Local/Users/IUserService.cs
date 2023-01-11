@@ -5,7 +5,7 @@ namespace Repositorio.Domain.Services.Local.Users
     public interface IUserService
     {
         List<UserDTO> GetAll();
-        UserDTO RegisterUser(UserDTO User);
+        Task<UserDTO> RegisterUser(UserDTO User);
         string GenerateToken(UserDTO User);
 
         AuthenticateResponse GetToken(AuthenticateRequest model);
