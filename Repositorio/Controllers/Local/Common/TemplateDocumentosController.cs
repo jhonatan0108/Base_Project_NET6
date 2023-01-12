@@ -18,6 +18,7 @@ namespace Repositorio.Controllers.Local.Common
         }
 
         [HttpPost]
+        [Route("GetTemplate")]
         public async Task<ResponseHandler<TemplateDocumentosContract>> GetTemplate(TemplateDocumentosContract request)
         {
             ResponseHandler<TemplateDocumentosContract> response = new();

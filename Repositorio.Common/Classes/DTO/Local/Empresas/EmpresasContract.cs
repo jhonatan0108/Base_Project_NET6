@@ -12,5 +12,6 @@
         public string Email { get; set; } = string.Empty;
         public string PaginaWeb { get; set; } = string.Empty;
         public string UrlLogo { get; set; } = string.Empty;
+        public string Prefijo { get; set; } = string.Empty;
     }
 }
