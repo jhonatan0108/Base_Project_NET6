@@ -33,7 +33,8 @@ namespace Repositorio.Domain.Services.Authorization
                         new Claim(JwtRegisteredClaimNames.Iat, DateTime.UtcNow.ToString()),
                         new Claim("UserId", userEntity.UserId.ToString()),
                         new Claim("UserName", userEntity.Username),
-                        new Claim("Email", userEntity.Email)
+                        new Claim("Email", userEntity.Email),
+                        new Claim("Empresa", userEntity.IdEmpresa.ToString())
             };
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:SecretKey"]));
