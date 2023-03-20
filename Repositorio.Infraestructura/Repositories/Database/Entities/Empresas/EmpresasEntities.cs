@@ -17,4 +17,14 @@ namespace Repositorio.Infraestructura.Repositories.Database.Entities.Empresas
         public string UrlLogo { get; set; } = string.Empty;
         public string Prefijo { get; set; } = string.Empty;
     }
+    public class EmpresaDatosAdicionalesEntities
+    {
+        [Key]
+        public int IdEmpresaDato { get; set; }
+        public int IdEmpresa { get; set; }
+        public string Representante { get; set; } = string.Empty;
+        public string Cuenta_Numero { get; set; } = string.Empty;
+        public string Cuenta_Tipo { get; set; } = string.Empty;
+        public string Cuenta_Banco { get; set; } = string.Empty;
+    }
 }

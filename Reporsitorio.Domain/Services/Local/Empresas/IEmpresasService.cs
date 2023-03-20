@@ -17,5 +17,12 @@ namespace Repositorio.Domain.Services.Local.Empresas
         /// <param name="id">parametro de consulta</param>
         /// <returns>Empresa</returns>
         Task<EmpresasContract> GetInfoEmpresabyID(int id);
+
+        /// <summary>
+        /// Metodo para obtener datos adicionales de una empresa el ID
+        /// </summary>
+        /// <param name="idEmpresa">parametro para la consulta</param>
+        /// <returns>Datos Adicionales Empresa</returns>
+        Task<EmpresaDatosAdicionalesContract> GetEmpresaDatosAdicionales(int idEmpresa);
     }
 }

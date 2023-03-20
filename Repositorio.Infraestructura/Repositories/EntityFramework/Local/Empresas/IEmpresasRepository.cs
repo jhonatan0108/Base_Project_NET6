@@ -5,5 +5,6 @@ namespace Repositorio.Infraestructura.Repositories.EntityFramework.Local.Empresa
     {
         Task<EmpresasEntities> GetInfoEmpresa(EmpresasEntities empresa);
         Task<EmpresasEntities> GetInfoEmpresabyID(int id);
+        Task<EmpresaDatosAdicionalesEntities> GetEmpresaDatosAdicionales(int idEmpresa);
     }
 }

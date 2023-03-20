@@ -13,6 +13,11 @@ namespace Repositorio.Infraestructura.Repositories.EntityFramework.Local.Empresa
             _context = context;
         }
 
+        public async Task<EmpresaDatosAdicionalesEntities> GetEmpresaDatosAdicionales(int idEmpresa)
+        {
+            return await _context.EmpresaDatosAdicionales.FirstOrDefaultAsync(x => x.IdEmpresa == idEmpresa);
+        }
+
         public async Task<EmpresasEntities> GetInfoEmpresa(EmpresasEntities empresa)
         {
             return await _context.Empresas.FirstOrDefaultAsync(x => x.TipoDocumento.Trim() == empresa.TipoDocumento.Trim() && x.Identificacion == empresa.Identificacion);

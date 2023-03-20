@@ -38,5 +38,15 @@ namespace Repositorio.Controllers.Local.Common
             response.Code = (int)HttpCodes.Ok;
             return response;
         }
+
+        [HttpGet]
+        [Route("GetDatosAdicionales/{id}")]
+        public async Task<ResponseHandler<EmpresaDatosAdicionalesContract>> EmpresaDatosAdicionales(int id)
+        {
+            ResponseHandler<EmpresaDatosAdicionalesContract> response = new();
+            response.Data = await _empresasService.GetEmpresaDatosAdicionales(id);
+            response.Code = (int)HttpCodes.Ok;
+            return response;
+        }
     }
 }

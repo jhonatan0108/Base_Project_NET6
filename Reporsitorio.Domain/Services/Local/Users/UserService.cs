@@ -104,7 +104,7 @@ namespace Repositorio.Domain.Services.Local.Users
 
             // validate
             if (user == null || !IsAuthenticated(_mapper.Map<UserDTO>(user), model.Password))
-                throw new ValidationException(UserConstants.MSG_USER_INCORRECT);
+                throw new UnauthorizedAccessException(UserConstants.MSG_USER_INCORRECT);
 
             var jwtToken = _jwtUtils.GenerateJwtToken(user);
             return new AuthenticateResponse(_mapper.Map<UserDTO>(user), jwtToken);
@@ -131,19 +131,19 @@ namespace Repositorio.Domain.Services.Local.Users
                         //update attemps 
                         user.MaxAttempts = user.MaxAttempts - 1;
                         _ = Task.Run(() => _userRepository.UpdateUser(user));
-                        throw new ValidationException(UserConstants.MSG_USER_INCORRECT);
+                        throw new UnauthorizedAccessException(UserConstants.MSG_USER_INCORRECT);
                     }
                 }
                 else
                 {
                     user.IdStatus = (int)StatusEnum.Inactive;
                     _userRepository.UpdateUser(user);
-                    throw new ValidationException(UserConstants.MSG_USER_BLOCKED);
+                    throw new UnauthorizedAccessException(UserConstants.MSG_USER_BLOCKED);
                 }
             }
             else
             {
-                throw new ValidationException(UserConstants.MSG_USER_NOT_FOUND);
+                throw new UnauthorizedAccessException(UserConstants.MSG_USER_NOT_FOUND);
             }
         }
 

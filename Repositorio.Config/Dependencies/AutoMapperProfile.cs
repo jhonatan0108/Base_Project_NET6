@@ -17,6 +17,7 @@ namespace Repositorio.Config.Dependencies
             CreateMap<SuperHero, SuperHeroDTO>().ReverseMap();
             CreateMap<UserDTO, UserEntity>().ReverseMap();
             CreateMap<EmpresasContract, EmpresasEntities>().ReverseMap();
+            CreateMap<EmpresaDatosAdicionalesContract, EmpresaDatosAdicionalesEntities>().ReverseMap();
             CreateMap<TemplateDocumentosContract, TemplateDocumentosEntities>().ReverseMap();
         }
     }

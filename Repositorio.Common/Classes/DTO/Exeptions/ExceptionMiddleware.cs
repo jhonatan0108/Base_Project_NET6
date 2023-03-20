@@ -52,7 +52,10 @@ namespace Repositorio.Common.Classes.DTO.Exeptions
                     case System.ComponentModel.DataAnnotations.ValidationException exeption:
                         httpContext.Response.StatusCode = (int)HttpStatusCode.BadRequest;
                         bodyresponse = JsonConvert.SerializeObject(new { StatusCode = (int)HttpStatusCode.BadRequest, message = exeption?.Message, });
-                        SendErrorService(ex, httpContext);
+                        break;
+                    case UnauthorizedAccessException exeption:
+                        httpContext.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
+                        bodyresponse = JsonConvert.SerializeObject(new { StatusCode = (int)HttpStatusCode.Unauthorized, message = exeption?.Message, });
                         break;
                     default:
                         // unhandled error

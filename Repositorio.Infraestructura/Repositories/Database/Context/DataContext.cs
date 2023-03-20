@@ -16,6 +16,7 @@ namespace Repositorio.Infraestructura.Repositories.Database.Context
         public virtual DbSet<SuperHero> SuperHero => Set<SuperHero>();
         public virtual DbSet<UserEntity> Users { get; set; }
         public virtual DbSet<EmpresasEntities> Empresas { get; set; }
+        public virtual DbSet<EmpresaDatosAdicionalesEntities> EmpresaDatosAdicionales { get; set; }
         public virtual DbSet<TemplateDocumentosEntities> Template_Documentos { get; set; }
         #endregion
 
@@ -33,6 +34,7 @@ namespace Repositorio.Infraestructura.Repositories.Database.Context
         {
             modelBuilder.Entity<UserEntity>().HasKey(e => new { e.UserId });
             modelBuilder.Entity<EmpresasEntities>().ToTable("Empresas");
+            modelBuilder.Entity<EmpresaDatosAdicionalesEntities>().ToTable("Empresas_DatosAdicionales");
             modelBuilder.Entity<TemplateDocumentosEntities>().ToTable("Templates_Documentos");
             base.OnModelCreating(modelBuilder);
         }
